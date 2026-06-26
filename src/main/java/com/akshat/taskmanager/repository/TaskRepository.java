@@ -21,5 +21,10 @@ public interface TaskRepository
             String assignedTo,
             String status
     );
+
+    boolean existsByProjectIdAndTitle(
+            String projectId,
+            String title
+    );
     
 }

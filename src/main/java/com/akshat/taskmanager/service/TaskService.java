@@ -188,4 +188,46 @@ public class TaskService {
                 .map(this::mapTask)
                 .toList();
     }
+
+    public Task createFromAi(
+            String projectId,
+            GeneratedTask generatedTask
+    ) {
+
+        if(taskRepository.existsByProjectIdAndTitle(
+                projectId,
+                generatedTask.getTitle()
+        )){
+
+            return null;
+
+        }
+
+        Task task = new Task();
+
+        task.setTitle(
+                generatedTask.getTitle()
+        );
+
+        task.setPriority(
+                generatedTask.getPriority()
+        );
+
+        task.setStatus("todo");
+
+        task.setProjectId(projectId);
+
+        task.setAssignedTo(null);
+
+        task.setDueDate(null);
+
+        task.setCreatedAt(new Date());
+
+        task.setUpdatedAt(new Date());
+
+        task.set__v(0);
+
+        return taskRepository.save(task);
+
+    }
 }
