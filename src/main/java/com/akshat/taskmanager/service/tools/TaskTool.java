@@ -6,6 +6,8 @@ import com.akshat.taskmanager.service.TaskService;
 import dev.langchain4j.agent.tool.Tool;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class TaskTool {
 
@@ -65,6 +67,57 @@ public class TaskTool {
         taskService.save(task);
 
         return task.getTitle() + " completed successfully.";
+
+    }
+
+    @Tool("Delete task from project")
+    public String deleteTask(
+
+            String projectId,
+
+            String title
+
+    ){
+
+        taskService.deleteTask(
+
+                projectId,
+
+                title
+
+        );
+
+        return "Task deleted successfully.";
+
+    }
+
+    @Tool("Get all pending tasks")
+    public List<Task> getPendingTasks(
+
+            String projectId
+
+    ){
+
+        return taskService.getPendingTasks(
+
+                projectId
+
+        );
+
+    }
+
+    @Tool("Get all high priority tasks")
+    public List<Task> getHighPriorityTasks(
+
+            String projectId
+
+    ){
+
+        return taskService.getHighPriorityTasks(
+
+                projectId
+
+        );
 
     }
 

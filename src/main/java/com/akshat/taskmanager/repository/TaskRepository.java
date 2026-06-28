@@ -46,5 +46,20 @@ public interface TaskRepository
             String projectId,
             String title
     );
+
+    List<Task> findByProjectIdAndStatus(
+            String projectId,
+            String status
+    );
+
+    List<Task> findByProjectIdAndPriority(
+            String projectId,
+            String priority
+    );
+
+    void deleteByProjectIdAndTitleIgnoreCase(
+            String projectId,
+            String title
+    );
     
 }

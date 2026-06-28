@@ -1,6 +1,7 @@
 package com.akshat.taskmanager.service;
 
 import com.akshat.taskmanager.service.assistant.ProjectAssistant;
+import com.akshat.taskmanager.util.PromptBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,6 +30,28 @@ public class AiService {
                 userId,
 
                 prompt
+
+        );
+
+    }
+
+    public String executeCommand(
+
+            String user,
+
+            String command
+
+    ){
+
+        return assistant.chat(
+
+                user,
+
+                PromptBuilder.commandPrompt(
+
+                        command
+
+                )
 
         );
 

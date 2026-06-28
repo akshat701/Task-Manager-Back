@@ -253,4 +253,44 @@ public class TaskService {
         return taskRepository.save(task);
 
     }
+
+    public List<Task> getPendingTasks(
+            String projectId
+    ){
+
+        return taskRepository.findByProjectIdAndStatus(
+                projectId,
+                "todo"
+        );
+
+    }
+
+    public List<Task> getHighPriorityTasks(
+            String projectId
+    ){
+
+        return taskRepository.findByProjectIdAndPriority(
+                projectId,
+                "high"
+        );
+
+    }
+
+    public void deleteTask(
+
+            String projectId,
+
+            String title
+
+    ){
+
+        taskRepository.deleteByProjectIdAndTitleIgnoreCase(
+
+                projectId,
+
+                title
+
+        );
+
+    }
 }

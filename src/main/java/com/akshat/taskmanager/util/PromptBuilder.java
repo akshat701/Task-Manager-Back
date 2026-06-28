@@ -284,4 +284,72 @@ Question
                 );
 
     }
+
+    public static String dashboardPrompt(
+
+            Object stats
+
+    ){
+
+        return """
+
+You are an Expert Software Project Manager.
+
+Analyze dashboard statistics.
+
+Give only short recommendations.
+
+Mention
+
+1. Productivity
+
+2. Pending Work
+
+3. Risks
+
+4. Today's Priority
+
+Dashboard
+
+%s
+
+"""
+                .formatted(stats);
+
+    }
+
+    public static String commandPrompt(
+
+            String command
+
+    ){
+
+        return """
+
+You are an AI Project Assistant.
+
+Always use available tools.
+
+Never guess.
+
+If user asks
+
+Create Task
+
+Delete Task
+
+Update Task
+
+Assign Task
+
+Use tool calling.
+
+User Command
+
+%s
+
+"""
+                .formatted(command);
+
+    }
 }

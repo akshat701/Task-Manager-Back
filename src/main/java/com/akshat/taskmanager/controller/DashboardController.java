@@ -1,7 +1,11 @@
 package com.akshat.taskmanager.controller;
+import com.akshat.taskmanager.dto.AiDashboardResponse;
+import com.akshat.taskmanager.dto.DashboardStatsResponse;
 import com.akshat.taskmanager.model.User;
 import com.akshat.taskmanager.repository.UserRepository;
 import com.akshat.taskmanager.repository.TaskRepository;
+import com.akshat.taskmanager.service.AiDashboardService;
+import com.akshat.taskmanager.service.DashboardService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,54 +16,40 @@ import java.util.Map;
 @RequestMapping("/api/dashboard")
 public class DashboardController {
 
-    private final TaskRepository taskRepository;
-    private final UserRepository userRepository;
+    private final DashboardService dashboardService;
+    private final AiDashboardService aiDashboardService;
 
     public DashboardController(
-            TaskRepository taskRepository,
-            UserRepository userRepository
+            DashboardService dashboardService,
+            AiDashboardService aiDashboardService
     ) {
-        this.taskRepository = taskRepository;
-        this.userRepository = userRepository;
+        this.dashboardService = dashboardService;
+        this.aiDashboardService = aiDashboardService;
     }
 
     @GetMapping("/stats")
-    public Map<String, Object> stats(
+    public DashboardStatsResponse stats(
             Authentication authentication
-    ) {
+    ){
 
-        String email = authentication.getName();
+        return dashboardService.getStats(
+                authentication.getName()
+        );
 
-        User user = userRepository
-                .findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+    }
 
-        String userId = user.getId();
+    @GetMapping("/ai")
+    public AiDashboardResponse aiDashboard(
 
-        long totalTasks =
-                taskRepository.countByAssignedTo(userId);
+            Authentication authentication
 
-        long completedTasks =
-                taskRepository.countByAssignedToAndStatus(
-                        userId,
-                        "done"
-                );
+    ){
 
-        long pendingTasks =
-                taskRepository.countByAssignedToAndStatusNot(
-                        userId,
-                        "done"
-                );
+        return aiDashboardService.dashboard(
 
-        Map<String, Object> response =
-                new HashMap<>();
+                authentication.getName()
 
-        response.put("totalTasks", totalTasks);
-        response.put("completedTasks", completedTasks);
-        response.put("pendingTasks", pendingTasks);
-        response.put("overdueTasks", 0);
+        );
 
-        return response;
     }
 }

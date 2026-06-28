@@ -93,4 +93,23 @@ public class AiController {
 
     }
 
+    @PostMapping("/command")
+    public String command(
+
+            Authentication authentication,
+
+            @RequestBody ChatRequest request
+
+    ){
+
+        return aiService.executeCommand(
+
+                authentication.getName(),
+
+                request.getQuestion()
+
+        );
+
+    }
+
 }
