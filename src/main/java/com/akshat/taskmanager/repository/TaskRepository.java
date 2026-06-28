@@ -4,6 +4,7 @@ import com.akshat.taskmanager.model.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskRepository
         extends MongoRepository<Task, String> {
@@ -23,6 +24,25 @@ public interface TaskRepository
     );
 
     boolean existsByProjectIdAndTitle(
+            String projectId,
+            String title
+    );
+
+    List<Task> findByProjectId(String projectId);
+
+    long countByProjectId(String projectId);
+
+    long countByProjectIdAndStatus(
+            String projectId,
+            String status
+    );
+
+    long countByProjectIdAndPriority(
+            String projectId,
+            String priority
+    );
+
+    Optional<Task> findByProjectIdAndTitleIgnoreCase(
             String projectId,
             String title
     );

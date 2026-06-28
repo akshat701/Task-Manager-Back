@@ -1,28 +1,37 @@
 package com.akshat.taskmanager.service;
 
-import dev.langchain4j.data.message.UserMessage;
-import dev.langchain4j.model.chat.ChatModel;
-import dev.langchain4j.model.chat.request.ChatRequest;
-import dev.langchain4j.model.chat.response.ChatResponse;
+import com.akshat.taskmanager.service.assistant.ProjectAssistant;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AiService {
 
-    private final ChatModel model;
+    private final ProjectAssistant assistant;
 
-    public AiService(ChatModel model) {
-        this.model = model;
+    public AiService(
+            ProjectAssistant assistant
+    ) {
+
+        this.assistant = assistant;
+
     }
 
-    public String ask(String prompt) {
+    public String ask(
 
-        ChatRequest request = ChatRequest.builder()
-                .messages(UserMessage.from(prompt))
-                .build();
+            String userId,
 
-        ChatResponse response = model.chat(request);
+            String prompt
 
-        return response.aiMessage().text();
+    ){
+
+        return assistant.chat(
+
+                userId,
+
+                prompt
+
+        );
+
     }
+
 }

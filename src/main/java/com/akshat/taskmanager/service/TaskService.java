@@ -230,4 +230,27 @@ public class TaskService {
         return taskRepository.save(task);
 
     }
+
+    public Task findTask(
+
+            String projectId,
+
+            String title
+
+    ){
+
+        return taskRepository
+                .findByProjectIdAndTitleIgnoreCase(
+                        projectId,
+                        title
+                )
+                .orElse(null);
+
+    }
+
+    public Task save(Task task){
+
+        return taskRepository.save(task);
+
+    }
 }

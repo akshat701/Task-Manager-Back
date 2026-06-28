@@ -58,7 +58,10 @@ public class AiTaskGeneratorService {
                 request.getEstimatedDays()
         );
 
-        String response = aiService.ask(prompt);
+        String response = aiService.ask(
+                "task-generator",
+                prompt
+        );
 
         response = response
                 .replace("```json", "")
